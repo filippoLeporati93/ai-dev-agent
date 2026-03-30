@@ -1,0 +1,25 @@
+name: AI Generate Docs
+description: "Generate Docs based on actual code"
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout agent repo
+      uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      shell: bash
+
+    - name: Run AI Docs Generator
+      run: python .github/actions/generate_docs/run.py
+      shell: python
+      env:
+        ANTHROPIC_API_KEY: ${{ env.ANTHROPIC_API_KEY }}
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        GITHUB_WORKSPACE: ${{ env.GITHUB_WORKSPACE }} 
+        GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}

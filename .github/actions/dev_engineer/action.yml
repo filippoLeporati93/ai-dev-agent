@@ -1,0 +1,30 @@
+name: AI Dev Engineer
+description: "Reads an issue and creates a PR with AI code fixes"
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout agent repo
+      uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+      shell: bash
+
+    - name: Run AI Dev Agent
+      run: python .github/actions/dev_engineer/run.py
+      shell: python
+      env:
+        ANTHROPIC_API_KEY: ${{ env.ANTHROPIC_API_KEY }}
+        GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        GITHUB_WORKSPACE: ${{ env.GITHUB_WORKSPACE }} 
+        REPO_FULL_NAME: ${{ env.REPO_FULL_NAME }}
+        ISSUE_NUMBER: ${{ env.ISSUE_NUMBER }}
+        TRIGGER_COMMENT: ${{ env.TRIGGER_COMMENT }}
+        EVENT_NAME: ${{ env.EVENT_NAME }}
+        PR_NUMBER: ${{ env.ISSUE_NUMBER }}  # fallback, you can adjust logic in run.py
+        REVIEW_BODY: ${{ env.REVIEW_BODY }}
