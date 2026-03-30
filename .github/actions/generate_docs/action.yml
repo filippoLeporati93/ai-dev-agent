@@ -5,6 +5,9 @@ runs:
   steps:
     - name: Checkout agent repo
       uses: actions/checkout@v6
+      with:
+        repository: filippoLeporati93/ai-dev-agent
+        path: agent_repo
 
     - name: Set up Python
       uses: actions/setup-python@v6
@@ -12,7 +15,7 @@ runs:
         python-version: "3.12"
 
     - name: Install dependencies
-      run: pip install -r ../../../requirements.txt
+      run: pip install -r ${{ github.action_path }}/../../requirements.txt
       shell: bash
 
     - name: Run AI Docs Generator
