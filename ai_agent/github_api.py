@@ -50,7 +50,7 @@ def commit_changeset(repo, changeset: Changeset, branch: str, message: str) -> N
     # Move branch pointer
     ref.edit(new_commit.sha)
 
-    print(f"    committed {len(changeset)} files in one commit")
+    print(f"    committed {len(changeset.staged_paths)} files in one commit")
 
 
 def create_branch(repo, branch: str) -> None:
