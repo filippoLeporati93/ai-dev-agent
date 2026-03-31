@@ -1,32 +1,24 @@
 """
 fs.py
 =====
-File system constants and helpers.
-No Anthropic or GitHub dependencies.
+File system helpers. No external dependencies.
 """
 
 from pathlib import Path
 
-SKIP_DIRS = {
-    ".git", "node_modules", ".venv", "venv", "__pycache__",
-    "dist", "build", ".next", ".nuxt", "coverage", ".pytest_cache",
-    ".github", "docs",
-}
-SKIP_EXTENSIONS = {
-    ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp",
-    ".woff", ".woff2", ".ttf", ".eot", ".pdf", ".zip", ".gz",
-    ".tar", ".lock", ".min.js", ".min.css", ".map", ".pyc",
-}
-MAX_FILE_BYTES = 80_000
+from config import SKIP_DIRS, SKIP_EXTENSIONS, MAX_FILE_BYTES
 
 
-def collect_files(root: Path, skip_dirs: set[str] | None = None) -> list[tuple[str, str]]:
+def collect_files(
+    root: Path,
+    extra_skip_dirs: set[str] | None = None,
+) -> list[tuple[str, str]]:
     """
-    Return (rel_path, content) for every readable source file under root.
-    skip_dirs extends SKIP_DIRS, e.g. pass {"docs"} to exclude /docs.
+    Return (rel_path, content) for every readable source file under *root*.
+    extra_skip_dirs extends the default SKIP_DIRS.
     """
-    skip = SKIP_DIRS | (skip_dirs or set())
-    results = []
+    skip = SKIP_DIRS | (extra_skip_dirs or set())
+    results: list[tuple[str, str]] = []
     for path in sorted(root.rglob("*")):
         if not path.is_file():
             continue
@@ -46,27 +38,25 @@ def collect_files(root: Path, skip_dirs: set[str] | None = None) -> list[tuple[s
 
 def read_files(repo_root: Path, paths: list[str]) -> str:
     """
-    Read the given source paths and return them packed into a single string,
-    each prefixed with a === path === header. Used to feed files to Claude.
+    Read source files and return them packed into a single string,
+    each prefixed with a === path === header.
     """
-    parts = []
+    parts: list[str] = []
     for rel in paths:
         full = repo_root / rel
         if not full.exists():
             parts.append(f"=== {rel} ===\n(file not found)")
             continue
         try:
-            parts.append(f"=== {rel} ===\n{full.read_text(encoding='utf-8', errors='replace')}")
+            text = full.read_text(encoding="utf-8", errors="replace")
+            parts.append(f"=== {rel} ===\n{text}")
         except Exception as e:
             parts.append(f"=== {rel} ===\n(error reading: {e})")
     return "\n\n".join(parts)
 
 
 def read_repo_file(repo_root: Path, rel_path: str) -> str:
-    """
-    Read a single repo file. Returns empty string if missing.
-    Logs filename and size for visibility in Actions output.
-    """
+    """Read a single repo file. Returns empty string if missing."""
     path = repo_root / rel_path
     if not path.exists():
         print(f"  warning: {rel_path} not found")
@@ -78,7 +68,7 @@ def read_repo_file(repo_root: Path, rel_path: str) -> str:
 
 def read_detailed_docs(repo_root: Path, paths: list[str]) -> str:
     """Read per-file docs from /docs for the given source paths."""
-    parts = []
+    parts: list[str] = []
     for rel in paths:
         doc = repo_root / "docs" / (rel + ".md")
         if doc.exists():
@@ -86,3 +76,14 @@ def read_detailed_docs(repo_root: Path, paths: list[str]) -> str:
         else:
             parts.append(f"=== {rel} ===\n(no detailed doc available)")
     return "\n\n".join(parts)
+
+
+def read_file_content(repo_root: Path, path: str) -> str:
+    """Read a single source file, return empty string on any failure."""
+    full = repo_root / path
+    if not full.exists():
+        return ""
+    try:
+        return full.read_text(encoding="utf-8", errors="replace")
+    except Exception:
+        return ""
