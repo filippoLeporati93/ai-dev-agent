@@ -48,7 +48,7 @@ SKIP_EXTENSIONS: set[str] = {
     ".tar", ".lock", ".min.js", ".min.css", ".map", ".pyc",
 }
 
-DOCS_DIR = GITHUB_WORKSPACE / "docs"
+DOCS_DIR = f"{GITHUB_WORKSPACE} / docs"
 
 # ── Batch polling ─────────────────────────────────────────────────────────────
 POLL_INTERVAL_SEC: int = 15
