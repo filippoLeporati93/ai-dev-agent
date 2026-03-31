@@ -11,13 +11,13 @@ from pathlib import Path
 
 import anthropic
 
-from config import MODEL_ENGINEER, MAX_TOKENS_PLAN
-from models import SelectResult, parse_json
-from errors import SelectionFailed
-from batch import batch_single
-from fs import read_detailed_docs
-from prompts import select as select_prompt
-from prompts import resolve as resolve_prompt
+from ai_agent.config import MODEL_ENGINEER, MAX_TOKENS_PLAN
+from ai_agent.models import SelectResult, parse_json
+from ai_agent.errors import SelectionFailed
+from ai_agent.batch import batch_single
+from ai_agent.fs import read_detailed_docs
+from ai_agent.prompts import select as select_prompt
+from ai_agent.prompts import resolve as resolve_prompt
 
 
 def run(

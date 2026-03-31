@@ -9,12 +9,12 @@ PR fix mode → returns FixPlan (with commit message)
 
 import anthropic
 
-from config import MODEL_ENGINEER, MAX_TOKENS_PLAN
-from models import Plan, FixPlan
-from errors import PlanningFailed
-from batch import batch_single
-from prompts import plan as plan_prompt
-from prompts import plan_fix as plan_fix_prompt
+from ai_agent.config import MODEL_ENGINEER, MAX_TOKENS_PLAN
+from ai_agent.models import Plan, FixPlan
+from ai_agent.errors import PlanningFailed
+from ai_agent.batch import batch_single
+from ai_agent.prompts import plan as plan_prompt
+from ai_agent.prompts import plan_fix as plan_fix_prompt
 
 
 def run_issue(

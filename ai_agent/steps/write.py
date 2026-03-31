@@ -12,12 +12,12 @@ from pathlib import Path
 
 import anthropic
 
-from config import MODEL_ENGINEER, MAX_TOKENS_WRITE
-from models import FileInstruction, Changeset
-from errors import WriteFailed
-from batch import batch_submit_and_poll
-from fs import read_file_content
-from prompts import write as write_prompt
+from ai_agent.config import MODEL_ENGINEER, MAX_TOKENS_WRITE
+from ai_agent.models import FileInstruction, Changeset
+from ai_agent.errors import WriteFailed
+from ai_agent.batch import batch_submit_and_poll
+from ai_agent.fs import read_file_content
+from ai_agent.prompts import write as write_prompt
 
 
 def run(

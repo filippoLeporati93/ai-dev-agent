@@ -10,13 +10,13 @@ from pathlib import Path
 
 import anthropic
 
-from config import REPO_FULL_NAME
-from models import Changeset
-from errors import AgentError
-from fs import read_repo_file, read_detailed_docs
-from github_api import collect_pr_feedback, checkout_branch, commit_changeset
-from steps import plan as plan_step
-from steps import write as write_step
+from ai_agent.config import REPO_FULL_NAME
+from ai_agent.models import Changeset
+from ai_agent.errors import AgentError
+from ai_agent.fs import read_repo_file, read_detailed_docs
+from ai_agent.github_api import collect_pr_feedback, checkout_branch, commit_changeset
+from ai_agent.steps import plan as plan_step
+from ai_agent.steps import write as write_step
 
 
 def run(repo, client: anthropic.Anthropic, repo_root: Path, pr_number: int) -> None:

@@ -8,9 +8,9 @@ from ai_agent.config import (
     DOCS_BATCH_SIZE
 )
 
-from batch import batch_submit_and_poll
+from ai_agent.batch import batch_submit_and_poll
 from ai_agent.prompts import doc_file as file_doc_prompts
-from models import Doc
+from ai_agent.models import Doc
 
 def doc_path(rel_source: str) -> Path:
     """docs/backend/models.py.md for source path backend/models.py"""

@@ -4,8 +4,8 @@ import anthropic
 from config import (
     GITHUB_WORKSPACE,
 )
-import fs
-from steps import docs as docs_step
+from ai_agent import fs
+from ai_agent.steps import docs as docs_step
 
 def run(client: anthropic.Anthropic) -> None:
     all_files = fs.collect_files(GITHUB_WORKSPACE, extra_skip_dirs={"docs"})
