@@ -15,8 +15,8 @@ from typing import Callable
 
 import anthropic
 
-from config import POLL_INTERVAL_SEC, MAX_WAIT_SEC
-from errors import BatchError
+from ai_agent.config import POLL_INTERVAL_SEC, MAX_WAIT_SEC
+from ai_agent.errors import BatchError
 
 
 def batch_submit_and_poll(

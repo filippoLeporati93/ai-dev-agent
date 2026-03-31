@@ -6,7 +6,7 @@ File system helpers. No external dependencies.
 
 from pathlib import Path
 
-from config import SKIP_DIRS, SKIP_EXTENSIONS, MAX_FILE_BYTES
+from ai_agent.config import SKIP_DIRS, SKIP_EXTENSIONS, MAX_FILE_BYTES
 
 
 def collect_files(

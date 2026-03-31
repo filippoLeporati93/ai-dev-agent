@@ -12,7 +12,7 @@ from pathlib import Path
 
 from github import GithubException
 
-from models import Changeset
+from ai_agent.models import Changeset
 
 from github import InputGitTreeElement, GithubException
 
