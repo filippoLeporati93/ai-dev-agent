@@ -51,5 +51,5 @@ SKIP_EXTENSIONS: set[str] = {
 DOCS_DIR = f"{GITHUB_WORKSPACE} / docs"
 
 # ── Batch polling ─────────────────────────────────────────────────────────────
-POLL_INTERVAL_SEC: int = 15
-MAX_WAIT_SEC: int = 3600
+POLL_INTERVAL_SEC: int = 60
+MAX_WAIT_SEC: int = 60 * 60 * 3
