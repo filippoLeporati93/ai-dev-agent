@@ -68,19 +68,27 @@ def batch_single(
     user: str,
     model: str,
     max_tokens: int = 8_000,
+    output_format: dict | None = None,
 ) -> str:
     """
     Submit one request via the Batch API, return the text response.
     Workhorse for select/plan steps that need a single JSON answer.
     """
+    params = {
+        "model": model,
+        "max_tokens": max_tokens,
+        "system": system,
+        "messages": [{"role": "user", "content": user}],
+    }
+
+    if output_format:
+        params["output_config"] = {
+            "format": output_format
+        }
+
     results = batch_submit_and_poll(client, [{
         "custom_id": "req",
-        "params": {
-            "model": model,
-            "max_tokens": max_tokens,
-            "system": system,
-            "messages": [{"role": "user", "content": user}],
-        },
+        "params": params,
     }])
 
     if "req" not in results:
@@ -88,7 +96,10 @@ def batch_single(
 
     msg = results["req"]
     print(f"  usage=in:{msg.usage.input_tokens} out:{msg.usage.output_tokens}")
-    return "".join(b.text for b in msg.content if b.type == "text").strip()
+
+    return "".join(
+        b.text for b in msg.content if b.type == "text"
+    ).strip()
 
 
 def batch_loop(
