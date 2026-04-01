@@ -21,3 +21,15 @@ def system(repo_name: str, handbook: str, index: str) -> str:
         f'}}\n\n'
         f"CODEBASE INDEX:\n{index}"
     )
+
+def output_format() -> dict:
+    return {
+        "type": "json_schema",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "files": {"type": "array", "items": {"type": "string"}},
+            "uncertain": {"type": "array", "items": {"type": "string"}}
+          }
+        }
+      }
