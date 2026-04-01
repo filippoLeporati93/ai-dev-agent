@@ -42,6 +42,7 @@ def rebuild_docs(client: anthropic.Anthropic, to_document: list[tuple[str,str]])
     for idx, chunk in enumerate(chunks):
         print(f"\nBatch {idx + 1}/{len(chunks)}…")
         system = file_doc_prompts.system()
+        output_format = file_doc_prompts.output_format()
         requests = [
         {
             "custom_id": f"f-{idx}-{i}",
@@ -56,18 +57,7 @@ def rebuild_docs(client: anthropic.Anthropic, to_document: list[tuple[str,str]])
                     }
                 ],
                 "output_config": {
-                  "format": {
-                    "type": "json_schema",
-                    "schema": {
-                      "type": "object",
-                      "properties": {
-                        "summary": {"type": "string"},
-                        "exports": {"type": "string"},
-                        "depends_on": {"type": "string"},
-                        "keyword": {"type": "string"}
-                      },
-                    }
-                  }
+                  "format": output_format
                 }
             },
         }
