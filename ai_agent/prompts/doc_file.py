@@ -1,11 +1,11 @@
 def system() -> str:
     return """\
-        You are writing compact AI-readable documentation for a source file.
+        You are writing AI-readable documentation for a source file.
         An AI will read this to decide whether to include the file when implementing a feature.
 
         Respond ONLY with valid JSON (no markdown fences):
         {
-        "summary": "One precise sentence (max 20 words) — what this file does and its role.",
+        "summary": "what this file does and its role.",
         "exports": ["PublicFunction", "ClassName", "CONSTANT"],
         "depends_on": ["relative/path/to/other/repo/file.py"],
         "keywords": ["auth", "user", "jwt"]
