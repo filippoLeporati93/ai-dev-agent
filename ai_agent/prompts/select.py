@@ -30,6 +30,7 @@ def output_format() -> dict:
           "properties": {
             "files": {"type": "array", "items": {"type": "string"}},
             "uncertain": {"type": "array", "items": {"type": "string"}}
-          }
+          },
+          "additionalProperties": False,
         }
       }
