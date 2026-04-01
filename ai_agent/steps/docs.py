@@ -55,6 +55,20 @@ def rebuild_docs(client: anthropic.Anthropic, to_document: list[tuple[str,str]])
                         "content": f"File: {rel}\n\n```\n{content[:60_000]}\n```",
                     }
                 ],
+                "output_config": {
+                  "format": {
+                    "type": "json_schema",
+                    "schema": {
+                      "type": "object",
+                      "properties": {
+                        "summary": {"type": "string"},
+                        "exports": {"type": "string"},
+                        "depends_on": {"type": "string"},
+                        "keyword": {"type": "string"}
+                      },
+                    }
+                  }
+                }
             },
         }
         for i, (rel, content) in enumerate(chunk)
