@@ -35,7 +35,8 @@ def run(
     # ── Pass 1 ────────────────────────────────────────────────────────────
     print("\nPass 1: selecting files…")
     system = select_prompt.system(repo_name, handbook, index)
-    raw = batch_single(client, system, issue_text, MODEL_ENGINEER, MAX_TOKENS_PLAN)
+    output_format = select_prompt.output_format()
+    raw = batch_single(client, system, issue_text, MODEL_ENGINEER, MAX_TOKENS_PLAN, output_format)
     result = SelectResult.from_json(raw)
     print(f"  confident={len(result.confident)}  uncertain={len(result.uncertain)}")
 
