@@ -14,11 +14,9 @@ def system(repo_name: str, handbook: str, index: str) -> str:
         f"Given the issue and the codebase index, select the files needed.\n\n"
         f"Include shared utilities, type definitions, and entry-point files.\n"
         f"Better to include too many than too few.\n\n"
-        f"Respond ONLY with valid JSON (no markdown fences):\n"
-        f'{{\n'
-        f'  "files": ["path/to/confident_file.py", ...],\n'
-        f'  "uncertain": ["path/to/maybe_needed.py", ...]\n'
-        f'}}\n\n'
+        f"Respond must contains:\n"
+        f'"files": ["path/to/confident_file.py", ...],\n'
+        f'"uncertain": ["path/to/maybe_needed.py", ...]\n'
         f"CODEBASE INDEX:\n{index}"
     )
 
@@ -31,6 +29,7 @@ def output_format() -> dict:
             "files": {"type": "array", "items": {"type": "string"}},
             "uncertain": {"type": "array", "items": {"type": "string"}}
           },
-          "additionalProperties": False,
+          "required": ["files", "uncertain"],
+          "additionalProperties": False
         }
       }
